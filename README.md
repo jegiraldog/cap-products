@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 # Getting Started
 
 Welcome to your new project.
@@ -27,4 +26,3 @@ File or Folder | Purpose
 ## Learn More
 
 Learn more at https://cap.cloud.sap/docs/get-started/.
->>>>>>> a2ade3a (First commit to CAP Project 2)
