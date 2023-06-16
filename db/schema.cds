@@ -12,14 +12,14 @@ entity Products {
         Width            : Decimal(16, 2);
         Depth            : Decimal(16, 2);
         Quantity         : Decimal(16, 2);
-        UnitOfMeasure_Id : String(2);
-        Currency_Id      : String(3);
-        Category_Id      : String(1);
-        Supplier_Id      : UUID;
-        DimensionUnit_Id : String(2);
+        UnitOfMeasure    : Association to UnitOfMeasures;
+        Currency         : Association to Currencies;
+        Category         : Association to Categories;
+        Supplier         : Association to Suppliers;
+        DimensionUnit    : Association to DimensionUnits;
 };
 
-entity Supplier {
+entity Suppliers {
     key ID         : UUID;
         Name       : String;
         Street     : String;
@@ -32,7 +32,7 @@ entity Supplier {
         Fax        : String;
 };
 
-entity Category {
+entity Categories {
     key ID   : String(1);
         Name : String;
 };
@@ -47,7 +47,7 @@ entity Currencies {
         Description : String;
 };
 
-entity UnitOFMeasures {
+entity UnitOfMeasures {
     key ID          : String(2);
         Description : String;
 };
@@ -64,13 +64,19 @@ entity Months {
 };
 
 entity ProductReview {
-    key Name    : String;
-        Rating  : Integer;
-        Comment : String;
+    key ID        : UUID;
+        Product   : Association to Products;
+        CreatedAt : String;
+        Name      : String;
+        Rating    : Integer;
+        Comment   : String;
 };
 
-
 entity SalesData {
-    key DeliveryDate : DateTime;
-        Revenue      : Decimal(16, 2);
+    key ID            : UUID;
+        DeliveryDate  : DateTime;
+        Revenue       : Decimal(16, 2);
+        Product       : Association to Products;
+        Currency      : Association to Currencies;
+        DeliveryMonth : Association to Months;
 }
