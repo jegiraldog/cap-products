@@ -141,3 +141,23 @@ define service MyService {
             Products.Name = 'Bread';
 
 };
+
+define service Reports {
+    entity AverageRating as projection on jegc.reports.AverageRating;
+
+    entity EntityCasting as
+        select
+            cast(
+                Price as      Integer
+            )     as Price,
+            Price as Price2 : Integer
+        from jegc.materials.Products;
+
+
+    entity EntityExists  as
+        select from jegc.materials.Products {
+            Name
+        }
+        where
+            exists Supplier[Name = 'Exotic Liquids'];
+};

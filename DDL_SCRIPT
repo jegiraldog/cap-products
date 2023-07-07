@@ -283,6 +283,25 @@ CREATE VIEW MyService_EntityJoin AS SELECT
 FROM (com_jegc_materials_Products AS Products_0 LEFT JOIN com_jegc_sales_Suppliers AS supp_1 ON (supp_1.ID = Products_0.Supplier_ID) AND supp_1.Name = 'Exotic Liquids')
 WHERE Products_0.Name = 'Bread';
 
+CREATE VIEW Reports_EntityCasting AS SELECT
+  CAST(Products_0.Price AS INTEGER) AS Price,
+  Products_0.Price AS Price2
+FROM com_jegc_materials_Products AS Products_0;
+
+CREATE VIEW Reports_EntityExists AS SELECT
+  Products_0.Name
+FROM com_jegc_materials_Products AS Products_0
+WHERE EXISTS (SELECT
+    1 AS dummy
+  FROM com_jegc_sales_Suppliers AS _Supplier_exists_1
+  WHERE _Supplier_exists_1.ID = Products_0.Supplier_ID AND _Supplier_exists_1.Name = 'Exotic Liquids');
+
+CREATE VIEW com_jegc_reports_AverageRating AS SELECT
+  ProductReview_0.Product_ID AS ProductId,
+  avg(ProductReview_0.Rating) AS AverageRating
+FROM com_jegc_materials_ProductReview AS ProductReview_0
+GROUP BY ProductReview_0.Product_ID;
+
 CREATE VIEW MyService_SuppliersProduct_texts AS SELECT
   texts_0.locale,
   texts_0.ID,
@@ -399,6 +418,11 @@ CREATE VIEW localized_com_jegc_sales_Orders AS SELECT
   L.Customer
 FROM com_jegc_sales_Orders AS L;
 
+CREATE VIEW Reports_AverageRating AS SELECT
+  AverageRating_0.ProductId,
+  AverageRating_0.AverageRating
+FROM com_jegc_reports_AverageRating AS AverageRating_0;
+
 CREATE VIEW localized_CatalogService_Products AS SELECT
   Products_0.ID,
   Products_0.Name AS ProductName,
@@ -483,6 +507,14 @@ CREATE VIEW localized_MyService_SuppliersProduct AS SELECT
   Supplier_1.Address_Country
 FROM (localized_com_jegc_materials_Products AS Products_0 LEFT JOIN localized_com_jegc_sales_Suppliers AS Supplier_1 ON Products_0.Supplier_ID = Supplier_1.ID)
 WHERE (Supplier_1.Address_PostalCode = 98074) AND (Products_0.Name = 'Bread');
+
+CREATE VIEW localized_Reports_EntityExists AS SELECT
+  Products_0.Name
+FROM localized_com_jegc_materials_Products AS Products_0
+WHERE EXISTS (SELECT
+    1 AS dummy
+  FROM localized_com_jegc_sales_Suppliers AS _Supplier_exists_1
+  WHERE _Supplier_exists_1.ID = Products_0.Supplier_ID AND _Supplier_exists_1.Name = 'Exotic Liquids');
 
 CREATE VIEW localized_CatalogService_Supplier AS SELECT
   Suppliers_0.ID,
@@ -890,6 +922,22 @@ CREATE VIEW localized_fr_MyService_SuppliersProduct AS SELECT
   Supplier_1.Address_Country
 FROM (localized_fr_com_jegc_materials_Products AS Products_0 LEFT JOIN localized_fr_com_jegc_sales_Suppliers AS Supplier_1 ON Products_0.Supplier_ID = Supplier_1.ID)
 WHERE (Supplier_1.Address_PostalCode = 98074) AND (Products_0.Name = 'Bread');
+
+CREATE VIEW localized_de_Reports_EntityExists AS SELECT
+  Products_0.Name
+FROM localized_de_com_jegc_materials_Products AS Products_0
+WHERE EXISTS (SELECT
+    1 AS dummy
+  FROM localized_de_com_jegc_sales_Suppliers AS _Supplier_exists_1
+  WHERE _Supplier_exists_1.ID = Products_0.Supplier_ID AND _Supplier_exists_1.Name = 'Exotic Liquids');
+
+CREATE VIEW localized_fr_Reports_EntityExists AS SELECT
+  Products_0.Name
+FROM localized_fr_com_jegc_materials_Products AS Products_0
+WHERE EXISTS (SELECT
+    1 AS dummy
+  FROM localized_fr_com_jegc_sales_Suppliers AS _Supplier_exists_1
+  WHERE _Supplier_exists_1.ID = Products_0.Supplier_ID AND _Supplier_exists_1.Name = 'Exotic Liquids');
 
 CREATE VIEW localized_de_CatalogService_Supplier AS SELECT
   Suppliers_0.ID,

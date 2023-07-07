@@ -109,3 +109,16 @@ context sales {
         DeliveryMonth : Association to Months;
     };
 }
+
+context reports {
+
+    entity AverageRating as
+        select from jegc.materials.ProductReview {
+            Product.ID as ProductId,
+            avg(
+                Rating
+            )          as AverageRating : Decimal(16, 2)
+        }
+        group by
+            Product.ID;
+}
