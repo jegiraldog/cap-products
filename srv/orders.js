@@ -104,4 +104,28 @@ module.exports = (srv) => {
     return await returnData;
   });
 
+  //************FUNCTION******/
+  srv.on("getClientTaxRate", async (req) => {
+    //NO Server side-effect
+
+    const { clientEmail } = req.data;
+    const db = srv.transaction(req);
+
+    const results = await db
+      .read(Orders, ["Country_code"])
+      .where({ ClientEmail: clientEmail });
+
+    console.log(results[0]);
+    //results[0].Country_code
+
+    switch (results[0].Country_code) {
+      case 'ES':
+        return 21.5
+      case 'UK':
+        return 24.5
+      default:
+        break;
+    }
+  });
+
 };
