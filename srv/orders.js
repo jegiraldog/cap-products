@@ -128,4 +128,31 @@ module.exports = (srv) => {
     }
   });
 
+  srv.on("cancelOrder", async (req) => {
+    const { clientEmail } = req.data;
+
+    const db = srv.transaction(req);
+    const resultsRead = await db
+      .read(Orders, ["FirstName", "LastName", "Approved"])
+      .where({ ClientEmail: clientEmail });
+
+    let returnOrder = {
+      status: "",
+      message: ""
+    };
+
+    if (resultsRead[0].Approved == false) {
+      const resultsUpdate = await db
+        .update(Orders).set({ Status: 'C' })
+        .where({ ClientEmail: clientEmail });
+      returnOrder.status = "Succeeded";
+      returnOrder.message = `The Order placed by ${resultsRead[0].FirstName} ${resultsRead[0].LastName} was canceled`;
+    } else {
+      returnOrder.status = "Failed";
+      returnOrder.message = `The Order placed by ${resultsRead[0].FirstName} ${resultsRead[0].LastName} was NOT canceled becouse was already approved`;
+    }
+    console.log("Action cancelOrder executed");
+    return returnOrder;
+  });
+
 };

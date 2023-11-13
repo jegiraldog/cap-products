@@ -29,3 +29,9 @@ DELETE http://localhost:4004/odata/v4/manage-orders/Orders('clientJG_01@prueba.c
 
 ### Get Customer Rate - Function Bound
 GET http://localhost:4004/odata/v4/manage-orders/getClientTaxRate(clientEmail='client2@client2.com')
+
+### Cancel Order - Action Bound
+POST http://localhost:4004/odata/v4/manage-orders/cancelOrder 
+Content-Type: application/json
+
+{"clientEmail" : "client2@client2.com"}
