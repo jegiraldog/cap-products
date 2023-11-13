@@ -2,7 +2,14 @@ const cds = require("@sap/cds");
 const { Orders } = cds.entities("com.training");
 
 module.exports = (srv) => {
-
+  srv.before("*", (req) => {
+    console.log(`Method: ${req.method}`);
+    console.log(`Target: ${req.target}`);
+    /****NOT YET RECORDER */
+    // console.log(req.user);
+	// console.log(req.user.is('authenticated-user'));
+  });
+  
   srv.on("READ", "Orders", async (req) => {
     if (req.data.ClientEmail !== undefined) {
       return await SELECT.from`com.training.Orders`
